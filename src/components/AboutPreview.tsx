@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Award, Users, Clock, Target, Shield } from 'lucide-react';
+import { Award, Users, Clock, Target } from 'lucide-react';
 
 const AboutPreview = () => {
   const stats = [
@@ -117,53 +117,6 @@ const AboutPreview = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Certificates & Awards */}
-        <div className="mt-16 pt-16 border-t border-gray-200">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Sertifikalar ve Başarılar
-            </h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Kalitemizi kanıtlayan sertifikalar ve ödüllerle sektörde 
-              güvenilir bir partner olarak hizmet veriyoruz.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#e6f7f8] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-[#00b9bf]" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">ISO 9001</h4>
-              <p className="text-sm text-gray-600">Kalite Yönetim Sistemi</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#e6f7f8] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8 text-[#00b9bf]" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">ISO 14001</h4>
-              <p className="text-sm text-gray-600">Çevre Yönetim Sistemi</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#e6f7f8] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target className="w-8 h-8 text-[#00b9bf]" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">OHSAS 18001</h4>
-              <p className="text-sm text-gray-600">İş Sağlığı ve Güvenliği</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#e6f7f8] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-[#00b9bf]" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Müşteri Memnuniyeti</h4>
-              <p className="text-sm text-gray-600">%100 Başarı Oranı</p>
-            </div>
           </div>
         </div>
       </div>
