@@ -41,7 +41,7 @@ const HeroSection = () => {
 
         {/* Content Section */}
         <div className="absolute inset-0 flex items-center justify-center px-4 py-8 md:py-0">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-20">
             {/* Main Content */}
             <div className="space-y-6 md:space-y-8">
               {/* Badge */}
@@ -83,8 +83,8 @@ const HeroSection = () => {
                 </Link>
               </div>
 
-              {/* Feature Highlights */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto pt-6 md:pt-8">
+              {/* Feature Highlights - Hidden on mobile to prevent overlap */}
+              <div className="hidden md:grid md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto pt-6 md:pt-8">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/20">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[#00b9bf]/20 rounded-xl flex items-center justify-center mx-auto mb-3 md:mb-4">
                     <Package className="w-5 h-5 md:w-6 md:h-6 text-[#00b9bf]" />
@@ -120,7 +120,7 @@ const HeroSection = () => {
       </section>
 
       {/* Mission Statement Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 to-white">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 to-white relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-6 md:space-y-8">
             <div className="space-y-4">
