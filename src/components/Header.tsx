@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface SubMenuItem {
   name: string;
@@ -24,38 +25,125 @@ const Header = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [hoveredSubmenu, setHoveredSubmenu] = useState<string | null>(null);
   const { language, setLanguage, t } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
   
   // Timeout refs for hover delays
   const productsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const submenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Function to get English equivalent of current path
+  const getEnglishPath = (currentPath: string): string => {
+    console.log('Getting English path for:', currentPath);
+    const pathMappings: { [key: string]: string } = {
+      '/': '/en',
+      '/hakkimizda': '/en/about',
+      '/muhendislik': '/en/engineering',
+      '/iletisim': '/en/contact',
+      '/teklif-al': '/en/quote',
+      '/urunler': '/en/products',
+      '/urunler/guc-aktarim-urunleri': '/en/products/power-transmission-products',
+      '/urunler/kremayer-pinyon': '/en/products/rack-pinion-systems',
+      '/urunler/lineer-hareket-sistemleri': '/en/products/linear-motion-systems',
+      '/urunler/lineer-kizak-arabalar': '/en/products/linear-slides-carriages',
+      '/urunler/vidali-mil-somunlar': '/en/products/ball-screws-nuts',
+      '/urunler/uc-yataklari': '/en/products/end-supports',
+    };
+
+    const englishPath = pathMappings[currentPath] || '/en';
+    console.log('English path result:', englishPath);
+    return englishPath;
+  };
+
+  // Function to get Turkish equivalent of current path
+  const getTurkishPath = (currentPath: string): string => {
+    console.log('Getting Turkish path for:', currentPath);
+    const pathMappings: { [key: string]: string } = {
+      '/en': '/',
+      '/en/about': '/hakkimizda',
+      '/en/engineering': '/muhendislik',
+      '/en/contact': '/iletisim',
+      '/en/quote': '/teklif-al',
+      '/en/products': '/urunler',
+      '/en/products/power-transmission-products': '/urunler/guc-aktarim-urunleri',
+      '/en/products/rack-pinion-systems': '/urunler/kremayer-pinyon',
+      '/en/products/linear-motion-systems': '/urunler/lineer-hareket-sistemleri',
+      '/en/products/linear-slides-carriages': '/urunler/lineer-kizak-arabalar',
+      '/en/products/ball-screws-nuts': '/urunler/vidali-mil-somunlar',
+      '/en/products/end-supports': '/urunler/uc-yataklari',
+    };
+
+    const turkishPath = pathMappings[currentPath] || '/';
+    console.log('Turkish path result:', turkishPath);
+    return turkishPath;
+  };
+
   const menuItems: MenuItem[] = [
-    { name: t('nav.home'), href: '/' },
+    { name: t('nav.home'), href: language === 'tr' ? '/' : '/en' },
     { 
       name: t('nav.products'), 
-      href: '/urunler',
+      href: language === 'tr' ? '/urunler' : '/en/products',
       submenu: [
-        { name: 'Güç Aktarım Ürünleri', href: '/urunler/guc-aktarim-urunleri', icon: '/productImage/GucAktarimUrunleri.jpg' },
-        { name: 'Kremayer ve Pinyon', href: '/urunler/kremayer-pinyon', icon: '/productImage/Kremayer ve Dişli Pinyon.jpg' },
         { 
-          name: 'Lineer Hareket Sistemleri', 
-          href: '/urunler/lineer-hareket-sistemleri', 
+          name: language === 'tr' ? 'Güç Aktarım Ürünleri' : 'Power Transmission Products', 
+          href: language === 'tr' ? '/urunler/guc-aktarim-urunleri' : '/en/products/power-transmission-products', 
+          icon: '/productImage/GucAktarimUrunleri.jpg' 
+        },
+        { 
+          name: language === 'tr' ? 'Kremayer ve Pinyon' : 'Rack and Pinion', 
+          href: language === 'tr' ? '/urunler/kremayer-pinyon' : '/en/products/rack-pinion-systems', 
+          icon: '/productImage/Kremayer ve Dişli Pinyon.jpg' 
+        },
+        { 
+          name: language === 'tr' ? 'Lineer Hareket Sistemleri' : 'Linear Motion Systems', 
+          href: language === 'tr' ? '/urunler/lineer-hareket-sistemleri' : '/en/products/linear-motion-systems', 
           icon: '/menuImage/70_91019372221854362.JPG_1920986_buyuk.ico',
           submenu: [
-            { name: 'Lineer Kızak ve Arabalar', href: '/urunler/lineer-kizak-arabalar', icon: '/productImage/Lineer Kızak ve Araballarr.png' },
-            { name: 'Vidalı Mil ve Somunlar', href: '/urunler/vidali-mil-somunlar', icon: '/productImage/Vidalı Mil ve Somunlar.avif' },
-            { name: 'Uç Yatakları', href: '/urunler/uc-yataklari', icon: '/productImage/Uç Yatakları.png' }
+            { 
+              name: language === 'tr' ? 'Lineer Kızak ve Arabalar' : 'Linear Slides and Carriages', 
+              href: language === 'tr' ? '/urunler/lineer-kizak-arabalar' : '/en/products/linear-slides-carriages', 
+              icon: '/productImage/Lineer Kızak ve Araballarr.png' 
+            },
+            { 
+              name: language === 'tr' ? 'Vidalı Mil ve Somunlar' : 'Ball Screws and Nuts', 
+              href: language === 'tr' ? '/urunler/vidali-mil-somunlar' : '/en/products/ball-screws-nuts', 
+              icon: '/productImage/Vidalı Mil ve Somunlar.avif' 
+            },
+            { 
+              name: language === 'tr' ? 'Uç Yatakları' : 'End Supports', 
+              href: language === 'tr' ? '/urunler/uc-yataklari' : '/en/products/end-supports', 
+              icon: '/productImage/Uç Yatakları.png' 
+            }
           ]
         }
       ]
     },
-    { name: t('nav.about'), href: '/hakkimizda' },
-    { name: t('nav.engineering'), href: '/muhendislik' },
-    { name: t('nav.contact'), href: '/iletisim' }
+    { name: t('nav.about'), href: language === 'tr' ? '/hakkimizda' : '/en/about' },
+    { name: t('nav.engineering'), href: language === 'tr' ? '/muhendislik' : '/en/engineering' },
+    { name: t('nav.contact'), href: language === 'tr' ? '/iletisim' : '/en/contact' }
   ];
 
   const toggleLanguage = () => {
-    setLanguage(language === 'tr' ? 'en' : 'tr');
+    console.log('Current pathname:', pathname);
+    console.log('Current language:', language);
+    
+    // Clean the pathname to ensure it matches our mappings
+    const cleanPathname = pathname.replace(/\/$/, ''); // Remove trailing slash
+    console.log('Cleaned pathname:', cleanPathname);
+    
+    const newLanguage = language === 'tr' ? 'en' : 'tr';
+    setLanguage(newLanguage);
+    
+    // Navigate to the equivalent page in the other language
+    if (newLanguage === 'en') {
+      const englishPath = getEnglishPath(cleanPathname);
+      console.log('Navigating to English path:', englishPath);
+      router.push(englishPath);
+    } else {
+      const turkishPath = getTurkishPath(cleanPathname);
+      console.log('Navigating to Turkish path:', turkishPath);
+      router.push(turkishPath);
+    }
   };
 
   // Handle products menu hover with delay
@@ -158,7 +246,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
+            <Link href={language === 'tr' ? '/' : '/en'} className="flex items-center">
               <Image 
                 src="/logo.png" 
                 alt="Yamanlar Mekatronik Logo" 
@@ -212,7 +300,7 @@ const Header = () => {
 
             {/* Quote Button */}
             <Link
-              href="/teklif-al"
+              href={language === 'tr' ? '/teklif-al' : '/en/quote'}
               className="bg-[#00b9bf] hover:bg-[#009aa0] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               {t('nav.getQuote')}
@@ -305,7 +393,7 @@ const Header = () => {
                   <span>Dil: {language.toUpperCase()}</span>
                 </button>
                 <Link
-                  href="/teklif-al"
+                  href={language === 'tr' ? '/teklif-al' : '/en/quote'}
                   className="bg-[#00b9bf] hover:bg-[#009aa0] text-white px-4 py-2 rounded-lg text-sm font-medium block text-center mt-2 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >

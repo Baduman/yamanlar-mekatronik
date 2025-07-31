@@ -1,6 +1,6 @@
 'use client';
 
-import { Cpu, Settings, Zap, Shield, TrendingUp, Users, CheckCircle, ArrowRight, Wrench, Cog, Factory, Smartphone } from 'lucide-react';
+import { Cpu, Shield, TrendingUp, CheckCircle, ArrowRight, Wrench, Cog, Smartphone } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useEffect } from 'react';
 

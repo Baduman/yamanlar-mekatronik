@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 import { translations, Language } from '@/lib/translations';
 
 interface LanguageContextType {
@@ -24,7 +25,17 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
+  const pathname = usePathname();
   const [language, setLanguage] = useState<Language>('tr');
+
+  // Detect language from URL path on page load
+  useEffect(() => {
+    if (pathname.startsWith('/en')) {
+      setLanguage('en');
+    } else {
+      setLanguage('tr');
+    }
+  }, [pathname]);
 
   const t = (key: string): string => {
     const keys = key.split('.');

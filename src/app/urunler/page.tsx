@@ -19,119 +19,136 @@ const ProductsPage = () => {
       description: 'Yüksek hassasiyet ve dayanıklılık sunan vidalı mil ve somun sistemleri.',
       image: '/productImage/Vidalı Mil ve Somunlar.avif',
       hasPage: true,
-      hasCatalog: true
+      hasCatalog: true,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Lineer Kızak ve Arabalar',
       description: 'Hassas lineer hareket için özel tasarlanmış kızak ve araba sistemleri.',
       image: '/productImage/Lineer Kızak ve Araballarr.png',
       hasPage: true,
-      hasCatalog: true
+      hasCatalog: true,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Uç Yatakları',
       description: 'Lineer sistemlerde güvenilir destek sağlayan uç yatakları.',
       image: '/productImage/Uç Yatakları.png',
       hasPage: true,
-      hasCatalog: true
+      hasCatalog: true,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Hassas Lineer Kızak',
       description: 'Mikron seviyesinde hassasiyet gerektiren uygulamalar için özel kızaklar.',
       image: '/productImage/Hassas Lineer Kızak.webp',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Teleskopik Raylar',
       description: 'Uzun mesafeli lineer hareketler için teleskopik ray sistemleri.',
       image: '/productImage/Teleskopik Raylar.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Lineer Rulman',
       description: 'Yüksek yük kapasitesi ve uzun ömürlü lineer rulmanlar.',
       image: '/productImage/Lineer Rulman.webp',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Lineer Kılavuzlar ve Kavisli Kılavuzlar',
       description: 'Düz ve kavisli yüzeylerde hassas hareket sağlayan kılavuz sistemleri.',
       image: '/productImage/Lineer Kılavuzlar ve Kavisli Kılavuzlar.webp',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Raylı Kılavuz Tablaları',
       description: 'Çok eksenli hareket gerektiren uygulamalar için raylı tablalar.',
       image: '/productImage/Raylı Kılavuz Tablaları.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Kremayer ve Dişli Pinyon',
       description: 'Dönüş hareketini lineer harekete çeviren kremayer-pinyon sistemleri.',
       image: '/productImage/Kremayer ve Dişli Pinyon.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Kremayer ve Pinyon Sistemleri'
     },
     {
       name: 'Kaplin',
       description: 'Mil bağlantılarında güvenilir ve esnek kaplin çözümleri.',
       image: '/productImage/Kaplin.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     },
     {
       name: 'Triger Dişliler ve Zincir Dişliler',
       description: 'Güç aktarımında verimli triger ve zincir dişli sistemleri.',
       image: '/productImage/Triger Dişliler ve Zincir Dişliler.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     },
     {
       name: 'Alt Destekli Miller',
       description: 'Uzun millerde sarkma önleyici alt destek sistemleri.',
       image: '/productImage/Alt Destekli Miller.webp',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     },
     {
       name: 'Krom Kaplı İndüksiyonlu Mil',
       description: 'Yüksek sertlik ve aşınma direnci sunan krom kaplı miller.',
       image: '/productImage/Krom Kaplı İndüksiyonlu Mil.webp',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     },
     {
       name: 'Vidalı Mil Somun Gövdeleri ve Mil Ucu Bağlantıları',
       description: 'Vidalı mil sistemlerinde güvenilir bağlantı elemanları.',
       image: '/productImage/Vidalı Mil Somun Gövdeleri ve Mil Ucu Bağlantıları.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Lineer Hareket Sistemleri'
     },
     {
       name: 'Bez Körük',
       description: 'Lineer sistemlerde toz ve kir koruması sağlayan bez körükler.',
       image: '/productImage/Bez Körük.png',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     },
     {
       name: 'Trapez Vidalar ve Mafsallar',
       description: 'Yüksek yük kapasitesi sunan trapez vidalı sistemler.',
       image: '/productImage/Trapez Vidalar ve Mafsallar.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     },
     {
       name: 'Kayışlar ve Kasnaklar',
       description: 'Güç aktarımında verimli kayış ve kasnak sistemleri.',
       image: '/productImage/Kayışlar ve Kasnaklar.jpg',
       hasPage: false,
-      hasCatalog: false
+      hasCatalog: false,
+      category: 'Güç Aktarım Ürünleri'
     }
   ];
 
@@ -220,7 +237,7 @@ const ProductsPage = () => {
                     ) : (
                       // Diğer ürünler için teklif al butonu
                       <Link
-                        href={`/teklif-al?product=${encodeURIComponent(product.name)}`}
+                        href={`/teklif-al?product=${encodeURIComponent(product.name)}&category=${encodeURIComponent(product.category || '')}`}
                         className="w-full bg-[#00b9bf] hover:bg-[#009aa0] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
                       >
                         Teklif Al
