@@ -24,7 +24,7 @@ const ProductsPage = () => {
     {
       name: 'Lineer Kızak ve Arabalar',
       description: 'Hassas lineer hareket için özel tasarlanmış kızak ve araba sistemleri.',
-      image: '/productImage/Lineer Kızak ve Arabalar.png',
+      image: '/productImage/Lineer Kızak ve Araballarr.png',
       hasPage: true,
       hasCatalog: true
     },
@@ -209,25 +209,18 @@ const ProductsPage = () => {
 
                   {/* Buttons */}
                   <div className="flex gap-3">
-                    {product.hasPage && (
-                      <Link
-                        href={`/urunler/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="flex-1 bg-[#00b9bf] hover:bg-[#009aa0] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
-                      >
-                        Sayfa
-                      </Link>
-                    )}
-                    {product.hasCatalog && (
+                    {index < 3 ? (
+                      // İlk 3 ürün için sadece katalog butonu (HIWIN yeşili)
                       <Link
                         href={`/katalog/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="flex-1 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
+                        className="w-full bg-[#4CAF50] hover:bg-[#45a049] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
                       >
                         Katalog
                       </Link>
-                    )}
-                    {!product.hasPage && !product.hasCatalog && (
+                    ) : (
+                      // Diğer ürünler için teklif al butonu
                       <Link
-                        href="/teklif-al"
+                        href={`/teklif-al?product=${encodeURIComponent(product.name)}`}
                         className="w-full bg-[#00b9bf] hover:bg-[#009aa0] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
                       >
                         Teklif Al
@@ -245,11 +238,11 @@ const ProductsPage = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Özel Çözümler İçin İletişime Geçin
+            Malzeme Tedariki İçin İletişime Geçin
           </h2>
           <p className="text-lg text-gray-600 mb-8">
-            İhtiyaçlarınıza özel mekatronik çözümler geliştiriyoruz. 
-            Uzman ekibimizle projenizi hayata geçirelim.
+            İhtiyacınız olan endüstriyel mekatronik malzemeleri güvenilir şekilde tedarik ediyoruz. 
+            HIWIN ve diğer önde gelen markaların ürünlerini stoktan hızlıca temin edebilirsiniz.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

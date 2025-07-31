@@ -1,47 +1,87 @@
-import { Send, Clock, Users, Shield } from 'lucide-react';
+'use client';
+
+import { Send, Clock, Package, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const QuotePage = () => {
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [urgency, setUrgency] = useState('');
+
+  // URL'den ürün parametresini al
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productParam = urlParams.get('product');
+      if (productParam) {
+        setSelectedProduct(decodeURIComponent(productParam));
+      }
+    }
+  }, []);
+
   const benefits = [
     {
       icon: Clock,
       title: 'Hızlı Yanıt',
-      description: '24 saat içinde size dönüş yapıyoruz'
+      description: '24 saat içinde fiyat teklifi alın'
     },
     {
-      icon: Users,
-      title: 'Uzman Ekip',
-      description: 'Deneyimli mühendislerimizle analiz'
+      icon: Package,
+      title: 'Stoktan Teslimat',
+      description: 'Geniş stok yapımızla hızlı teslimat'
     },
     {
       icon: Shield,
-      title: 'Güvenilir',
-      description: 'Kaliteli ve güvenilir çözümler'
+      title: 'Kalite Garantisi',
+      description: 'HIWIN ve diğer önde gelen markalar'
     }
   ];
 
-  const serviceTypes = [
-    'Otomasyon Sistemleri',
-    'Sensör Teknolojileri',
-    'Kontrol Sistemleri',
-    'Elektrik Sistemleri',
-    'Güvenlik Sistemleri',
-    'Performans Optimizasyonu',
-    'Danışmanlık Hizmetleri',
-    'Bakım ve Destek'
+  const productCategories = [
+    'Vidalı Mil ve Somunlar',
+    'Lineer Kızak ve Arabalar',
+    'Uç Yatakları',
+    'Hassas Lineer Kızak',
+    'Teleskopik Raylar',
+    'Lineer Rulman',
+    'Lineer Kılavuzlar ve Kavisli Kılavuzlar',
+    'Raylı Kılavuz Tablaları',
+    'Kremayer ve Dişli Pinyon',
+    'Kaplin',
+    'Triger Dişliler ve Zincir Dişliler',
+    'Alt Destekli Miller',
+    'Krom Kaplı İndüksiyonlu Mil',
+    'Vidalı Mil Somun Gövdeleri ve Mil Ucu Bağlantıları',
+    'Bez Körük',
+    'Trapez Vidalar ve Mafsallar',
+    'Kayışlar ve Kasnaklar'
   ];
+
+  const brands = [
+    'HIWIN',
+    'PYG',
+    'YOSO',
+    'Diğer'
+  ];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Form gönderme işlemi burada yapılacak
+    alert('Teklif talebiniz alındı. En kısa sürede size dönüş yapacağız.');
+  };
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
+      <section className="bg-gradient-to-br from-[#e6f7f8] to-[#00b9bf]/20 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Teklif Alın
+              Malzeme Teklifi Alın
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Projeniz için özel teklif alın. Uzman ekibimiz ihtiyaçlarınızı analiz ederek 
-              size en uygun çözümü sunacak.
+              İhtiyacınız olan endüstriyel mekatronik malzemeleri için hızlı ve güvenilir teklif alın. 
+              HIWIN ve diğer önde gelen markaların ürünlerini stoktan tedarik ediyoruz.
             </p>
           </div>
         </div>
@@ -53,8 +93,8 @@ const QuotePage = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <benefit.icon className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-[#00b9bf]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <benefit.icon className="w-8 h-8 text-[#00b9bf]" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {benefit.title}
@@ -74,14 +114,14 @@ const QuotePage = () => {
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Teklif Formu
+                Malzeme Teklif Formu
               </h2>
               <p className="text-gray-600">
-                Aşağıdaki formu doldurarak projeniz için özel teklif alabilirsiniz.
+                Aşağıdaki formu doldurarak ihtiyacınız olan malzemeler için teklif alabilirsiniz.
               </p>
             </div>
 
-            <form className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-8">
               {/* Company Information */}
               <div className="space-y-6">
                 <h3 className="text-xl font-semibold text-gray-900 border-b border-gray-200 pb-2">
@@ -96,7 +136,7 @@ const QuotePage = () => {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                       placeholder="Şirket adınız"
                     />
                   </div>
@@ -106,7 +146,7 @@ const QuotePage = () => {
                     </label>
                     <select
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     >
                       <option value="">Sektör seçiniz</option>
                       <option value="manufacturing">Üretim</option>
@@ -116,34 +156,6 @@ const QuotePage = () => {
                       <option value="pharmaceutical">İlaç</option>
                       <option value="textile">Tekstil</option>
                       <option value="other">Diğer</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Çalışan Sayısı
-                    </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                      <option value="">Seçiniz</option>
-                      <option value="1-10">1-10</option>
-                      <option value="11-50">11-50</option>
-                      <option value="51-200">51-200</option>
-                      <option value="201-500">201-500</option>
-                      <option value="500+">500+</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Şirket Büyüklüğü
-                    </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                      <option value="">Seçiniz</option>
-                      <option value="startup">Startup</option>
-                      <option value="small">Küçük İşletme</option>
-                      <option value="medium">Orta Ölçekli</option>
-                      <option value="large">Büyük Şirket</option>
                     </select>
                   </div>
                 </div>
@@ -163,7 +175,7 @@ const QuotePage = () => {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                       placeholder="Adınız ve soyadınız"
                     />
                   </div>
@@ -174,7 +186,7 @@ const QuotePage = () => {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                       placeholder="Pozisyonunuz"
                     />
                   </div>
@@ -188,7 +200,7 @@ const QuotePage = () => {
                     <input
                       type="email"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                       placeholder="E-posta adresiniz"
                     />
                   </div>
@@ -199,72 +211,92 @@ const QuotePage = () => {
                     <input
                       type="tel"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                       placeholder="Telefon numaranız"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Project Information */}
+              {/* Product Information */}
               <div className="space-y-6">
                 <h3 className="text-xl font-semibold text-gray-900 border-b border-gray-200 pb-2">
-                  Proje Bilgileri
+                  Malzeme Bilgileri
                 </h3>
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Hizmet Türü *
-                  </label>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {serviceTypes.map((service, index) => (
-                      <label key={index} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        />
-                        <span className="ml-2 text-sm text-gray-700">{service}</span>
-                      </label>
-                    ))}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Ürün Kategorisi *
+                    </label>
+                    <select
+                      required
+                      value={selectedProduct}
+                      onChange={(e) => setSelectedProduct(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
+                    >
+                      <option value="">Ürün kategorisi seçiniz</option>
+                      {productCategories.map((category, index) => (
+                        <option key={index} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Tercih Ettiğiniz Marka
+                    </label>
+                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent">
+                      <option value="">Marka seçiniz</option>
+                      {brands.map((brand, index) => (
+                        <option key={index} value={brand}>
+                          {brand}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Proje Bütçesi
+                      Miktar/Adet *
                     </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                      <option value="">Seçiniz</option>
-                      <option value="0-50k">0 - 50.000 TL</option>
-                      <option value="50k-200k">50.000 - 200.000 TL</option>
-                      <option value="200k-500k">200.000 - 500.000 TL</option>
-                      <option value="500k-1m">500.000 - 1.000.000 TL</option>
-                      <option value="1m+">1.000.000 TL+</option>
-                    </select>
+                    <input
+                      type="text"
+                      required
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
+                      placeholder="Örn: 10 adet, 5 metre, 2 set"
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Proje Zamanı
+                      Teslimat Aciliyeti
                     </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <select
+                      value={urgency}
+                      onChange={(e) => setUrgency(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
+                    >
                       <option value="">Seçiniz</option>
-                      <option value="urgent">Acil (1-2 ay)</option>
-                      <option value="normal">Normal (3-6 ay)</option>
-                      <option value="flexible">Esnek (6+ ay)</option>
+                      <option value="urgent">Acil (1-3 gün)</option>
+                      <option value="normal">Normal (1 hafta)</option>
+                      <option value="flexible">Esnek (2-4 hafta)</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Proje Açıklaması *
+                    Teknik Özellikler / Detaylar
                   </label>
                   <textarea
-                    required
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    placeholder="Projeniz hakkında detaylı bilgi verin. Mevcut durum, hedefler, özel gereksinimler vb."
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent resize-none"
+                    placeholder="Ürünün teknik özellikleri, boyutları, malzeme türü, özel gereksinimler vb. detayları belirtiniz."
                   ></textarea>
                 </div>
 
@@ -275,11 +307,11 @@ const QuotePage = () => {
                   <input
                     type="file"
                     multiple
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    accept=".pdf,.doc,.docx,.jpg,.png,.zip"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
+                    accept=".pdf,.doc,.docx,.jpg,.png,.zip,.dwg,.dxf"
                   />
                   <p className="text-sm text-gray-500 mt-1">
-                    PDF, Word, resim dosyaları veya ZIP arşivi yükleyebilirsiniz (Max: 10MB)
+                    Teknik çizimler, katalog sayfaları, resimler veya diğer belgeler yükleyebilirsiniz (Max: 10MB)
                   </p>
                 </div>
               </div>
@@ -294,7 +326,7 @@ const QuotePage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Nasıl Haberdar Oldunuz?
                   </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent">
                     <option value="">Seçiniz</option>
                     <option value="website">Web Sitesi</option>
                     <option value="social">Sosyal Medya</option>
@@ -310,9 +342,9 @@ const QuotePage = () => {
                     Ek Notlar
                   </label>
                   <textarea
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    placeholder="Eklemek istediğiniz notlar veya özel gereksinimler..."
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent resize-none"
+                    placeholder="Eklemek istediğiniz notlar, özel gereksinimler veya sorularınız..."
                   ></textarea>
                 </div>
               </div>
@@ -321,10 +353,10 @@ const QuotePage = () => {
               <div className="text-center pt-6">
                 <button
                   type="submit"
-                  className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center px-8 py-4 bg-[#00b9bf] text-white font-semibold rounded-lg hover:bg-[#009aa0] transition-colors"
                 >
                   <Send className="w-5 h-5 mr-2" />
-                  Teklif Gönder
+                  Teklif Talebi Gönder
                 </button>
                 <p className="text-sm text-gray-500 mt-4">
                   * İşaretli alanlar zorunludur
@@ -343,56 +375,56 @@ const QuotePage = () => {
               Teklif Süreci
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Teklif talebinizden proje tamamlanmasına kadar olan süreç
+              Teklif talebinizden malzeme teslimatına kadar olan süreç
             </p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+              <div className="w-16 h-16 bg-[#00b9bf] text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
                 1
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Teklif Gönderimi
+                Teklif Talebi
               </h3>
               <p className="text-gray-600">
-                Formu doldurarak proje detaylarınızı paylaşın
+                Formu doldurarak malzeme detaylarınızı paylaşın
               </p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+              <div className="w-16 h-16 bg-[#00b9bf] text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
                 2
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Analiz
+                Stok Kontrolü
               </h3>
               <p className="text-gray-600">
-                Uzman ekibimiz ihtiyaçlarınızı detaylı analiz eder
+                Stok durumunu kontrol edip fiyat hesaplaması yaparız
               </p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+              <div className="w-16 h-16 bg-[#00b9bf] text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
                 3
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Teklif Hazırlama
+                Fiyat Teklifi
               </h3>
               <p className="text-gray-600">
-                Size özel kapsamlı teklif hazırlanır
+                Size detaylı fiyat teklifi hazırlarız
               </p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+              <div className="w-16 h-16 bg-[#00b9bf] text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl">
                 4
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Proje Başlangıcı
+                Hızlı Teslimat
               </h3>
               <p className="text-gray-600">
-                Onay sonrası proje hayata geçirilir
+                Onay sonrası malzemelerinizi teslim ederiz
               </p>
             </div>
           </div>

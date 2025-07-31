@@ -1,78 +1,89 @@
-import { Cpu, Settings, Zap, Shield, TrendingUp, Users, CheckCircle, ArrowRight } from 'lucide-react';
+'use client';
+
+import { Cpu, Settings, Zap, Shield, TrendingUp, Users, CheckCircle, ArrowRight, Wrench, Cog, Factory, Smartphone } from 'lucide-react';
 import Link from 'next/link';
+import { useRef, useEffect } from 'react';
 
 const EngineeringPage = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+    }
+  }, []);
+
   const services = [
     {
-      icon: Cpu,
-      title: 'Sistem Tasarımı',
-      description: 'Endüstriyel sistemlerin tasarımı ve optimizasyonu',
+      icon: Wrench,
+      title: 'Özel Parça Üretim ve Prototipleme',
+      description: 'İhtiyaçlarınıza özel parça üretimi ve prototip geliştirme hizmetleri',
       features: [
-        'Mekatronik sistem tasarımı',
-        'Kontrol algoritmaları geliştirme',
-        'Simülasyon ve analiz',
+        'Özel parça tasarımı ve üretimi',
         'Prototip geliştirme',
-        'Performans optimizasyonu'
-      ]
-    },
-    {
-      icon: Settings,
-      title: 'Proje Yönetimi',
-      description: 'Kapsamlı proje yönetimi ve danışmanlık hizmetleri',
-      features: [
-        'Proje planlama ve takip',
-        'Risk yönetimi',
-        'Kalite kontrol',
-        'Dokümantasyon',
-        'Ekip koordinasyonu'
-      ]
-    },
-    {
-      icon: Zap,
-      title: 'Elektrik Sistemleri',
-      description: 'Güvenli ve verimli elektrik sistemleri tasarımı',
-      features: [
-        'Güç dağıtım sistemleri',
-        'Aydınlatma tasarımı',
-        'Güvenlik sistemleri',
-        'Enerji verimliliği',
-        'Bakım planlaması'
+        '3D baskı ve hızlı prototipleme',
+        'Malzeme seçimi ve optimizasyonu',
+        'Kalite kontrol ve test süreçleri'
       ]
     },
     {
       icon: Shield,
-      title: 'Güvenlik Sistemleri',
-      description: 'İş güvenliği ve sistem koruması çözümleri',
+      title: 'Bakım ve Destek Planları Oluşturma',
+      description: 'Sistemlerinizin uzun ömürlü olması için kapsamlı bakım planları',
       features: [
-        'E-Stop sistemleri',
-        'Güvenlik ağları',
-        'Acil durum sistemleri',
-        'Risk analizi',
-        'Güvenlik eğitimi'
+        'Önleyici bakım planları',
+        'Bakım takvimleri oluşturma',
+        'Yedek parça yönetimi',
+        'Arıza analizi ve çözümleri',
+        'Performans izleme sistemleri'
+      ]
+    },
+    {
+      icon: Cpu,
+      title: 'Sistem Entegrasyonu ve Test Hizmetleri',
+      description: 'Karmaşık sistemlerin entegrasyonu ve kapsamlı test süreçleri',
+      features: [
+        'Sistem entegrasyonu',
+        'Yazılım ve donanım entegrasyonu',
+        'Kapsamlı test süreçleri',
+        'Performans doğrulama',
+        'Güvenlik testleri'
+      ]
+    },
+    {
+      icon: Cog,
+      title: 'CNC Makine Tasarımı ve İyileştirme',
+      description: 'CNC makinelerin tasarımı, optimizasyonu ve iyileştirme çözümleri',
+      features: [
+        'CNC makine tasarımı',
+        'Mevcut makinelerin iyileştirilmesi',
+        'Otomasyon entegrasyonu',
+        'Hassasiyet optimizasyonu',
+        'Verimlilik artırma çözümleri'
       ]
     },
     {
       icon: TrendingUp,
-      title: 'Performans Analizi',
-      description: 'Mevcut sistemlerin analizi ve iyileştirme',
+      title: 'Lineer Hareket Sistemleri Tasarımı',
+      description: 'Hassas lineer hareket sistemlerinin tasarımı ve optimizasyonu',
       features: [
-        'Sistem analizi',
-        'Verimlilik artırma',
-        'Bakım optimizasyonu',
-        'Enerji tasarrufu',
-        'Maliyet analizi'
+        'Lineer sistem tasarımı',
+        'Hassasiyet optimizasyonu',
+        'Yük kapasitesi hesaplamaları',
+        'Malzeme seçimi',
+        'Performans analizi'
       ]
     },
     {
-      icon: Users,
-      title: 'Danışmanlık',
-      description: 'Uzman danışmanlık ve eğitim hizmetleri',
+      icon: Smartphone,
+      title: 'Endüstri Uyumluluğu 4.0',
+      description: 'Endüstri 4.0 standartlarına uygun sistem entegrasyonu',
       features: [
-        'Teknik danışmanlık',
-        'Eğitim programları',
-        'Süreç iyileştirme',
-        'Strateji geliştirme',
-        'Kalite yönetimi'
+        'IoT entegrasyonu',
+        'Veri toplama sistemleri',
+        'Akıllı fabrika çözümleri',
+        'Uzaktan izleme sistemleri',
+        'Dijital ikiz teknolojileri'
       ]
     }
   ];
@@ -81,7 +92,7 @@ const EngineeringPage = () => {
     {
       step: '01',
       title: 'İhtiyaç Analizi',
-      description: 'Müşteri ihtiyaçlarının detaylı analizi ve gereksinimlerin belirlenmesi'
+      description: 'Müşteri ihtiyaçlarının detaylı analizi ve teknik gereksinimlerin belirlenmesi'
     },
     {
       step: '02',
@@ -90,52 +101,103 @@ const EngineeringPage = () => {
     },
     {
       step: '03',
-      title: 'Geliştirme',
-      description: 'Prototip geliştirme, test ve optimizasyon süreçleri'
+      title: 'Geliştirme ve Üretim',
+      description: 'Prototip geliştirme, özel parça üretimi ve test süreçleri'
     },
     {
       step: '04',
-      title: 'Uygulama',
-      description: 'Sistem kurulumu, entegrasyon ve devreye alma'
+      title: 'Entegrasyon ve Test',
+      description: 'Sistem entegrasyonu, kapsamlı testler ve performans doğrulama'
     },
     {
       step: '05',
-      title: 'Test ve Doğrulama',
-      description: 'Kapsamlı testler, performans doğrulama ve kalite kontrol'
+      title: 'Devreye Alma',
+      description: 'Sistem kurulumu, eğitim ve devreye alma süreçleri'
     },
     {
       step: '06',
       title: 'Destek ve Bakım',
-      description: 'Sürekli teknik destek, bakım ve iyileştirme hizmetleri'
+      description: 'Sürekli teknik destek, bakım planları ve iyileştirme hizmetleri'
     }
   ];
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Mühendislik Hizmetleri
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen overflow-hidden">
+        {/* Video Background */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/MuhendislikVideo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/60"></div>
+        
+        {/* Background Elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-[#00b9bf]/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#00b9bf]/10 rounded-full blur-3xl"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 flex items-center justify-center h-full">
+          <div className="text-center text-white max-w-6xl mx-auto px-8">
+            <div className="inline-flex items-center px-4 py-2 bg-[#00b9bf]/20 backdrop-blur-sm rounded-full border border-[#00b9bf]/30 mb-8">
+              <Cpu className="w-4 h-4 text-[#00b9bf] mr-2" />
+              <span className="text-sm font-medium">Mühendislik Hizmetleri</span>
+            </div>
+            
+            <h1 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+              Mühendislik{' '}
+              <span className="bg-gradient-to-r from-[#00b9bf] to-[#009aa0] bg-clip-text text-transparent">
+                Çözümleri
+              </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Deneyimli mühendislik ekibimizle, projelerinizi en yüksek kalite 
-              standartlarında hayata geçiriyoruz.
+            <p className="text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed mb-12">
+              25 yıllık deneyimimizle, endüstriyel mekatronik alanında kapsamlı mühendislik 
+              hizmetleri sunuyoruz. Özel parça üretiminden sistem entegrasyonuna kadar 
+              tüm ihtiyaçlarınız için uzman çözümler geliştiriyoruz.
             </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link
+                href="/teklif-al"
+                className="group inline-flex items-center justify-center px-8 py-4 bg-[#00b9bf] text-white font-bold rounded-xl hover:bg-[#009aa0] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Teklif Alın
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/iletisim"
+                className="group inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-[#00b9bf] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
+              >
+                İletişime Geçin
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Services Overview */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Hizmet Alanlarımız
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              Mühendislik{' '}
+              <span className="bg-gradient-to-r from-[#00b9bf] to-[#009aa0] bg-clip-text text-transparent">
+                Hizmetlerimiz
+              </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Mekatronik alanında kapsamlı mühendislik çözümleri sunuyoruz
+              Endüstriyel mekatronik alanında kapsamlı mühendislik çözümleri sunuyoruz
             </p>
           </div>
 
@@ -143,26 +205,26 @@ const EngineeringPage = () => {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg hover:border-blue-300 transition-all duration-300"
+                className="group bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-xl hover:border-[#00b9bf] transition-all duration-500 transform hover:-translate-y-2"
               >
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-blue-600" />
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#00b9bf] to-[#009aa0] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <service.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="ml-4 text-xl font-semibold text-gray-900">
+                  <h3 className="ml-4 text-xl font-bold text-gray-900 group-hover:text-[#00b9bf] transition-colors">
                     {service.title}
                   </h3>
                 </div>
                 
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   {service.description}
                 </p>
                 
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {service.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                      {feature}
+                    <li key={featureIndex} className="flex items-start text-sm text-gray-600">
+                      <CheckCircle className="w-4 h-4 text-[#00b9bf] mr-3 mt-0.5 flex-shrink-0" />
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -173,11 +235,18 @@ const EngineeringPage = () => {
       </section>
 
       {/* Process */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-[#e6f7f8] relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-20 left-20 w-16 h-16 bg-[#00b9bf]/10 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-20 right-20 w-20 h-20 bg-[#00b9bf]/5 rounded-full blur-2xl"></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Çalışma Sürecimiz
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              Çalışma{' '}
+              <span className="bg-gradient-to-r from-[#00b9bf] to-[#009aa0] bg-clip-text text-transparent">
+                Sürecimiz
+              </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Projelerinizi sistematik ve profesyonel bir yaklaşımla hayata geçiriyoruz
@@ -186,17 +255,17 @@ const EngineeringPage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {process.map((step, index) => (
-              <div key={index} className="relative">
-                <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+              <div key={index} className="relative group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                  <div className="flex items-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#00b9bf] to-[#009aa0] text-white rounded-2xl flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform duration-300">
                       {step.step}
                     </div>
-                    <h3 className="ml-4 text-xl font-semibold text-gray-900">
+                    <h3 className="ml-4 text-xl font-bold text-gray-900 group-hover:text-[#00b9bf] transition-colors">
                       {step.title}
                     </h3>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -204,7 +273,7 @@ const EngineeringPage = () => {
                 {/* Arrow for connection */}
                 {index < process.length - 1 && (
                   <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <ArrowRight className="w-8 h-8 text-blue-300" />
+                    <ArrowRight className="w-8 h-8 text-[#00b9bf]/30" />
                   </div>
                 )}
               </div>
@@ -215,53 +284,56 @@ const EngineeringPage = () => {
 
       {/* Why Choose Us */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                Neden Bizi Seçmelisiniz?
+                Neden{' '}
+                <span className="bg-gradient-to-r from-[#00b9bf] to-[#009aa0] bg-clip-text text-transparent">
+                  Bizi Seçmelisiniz?
+                </span>
               </h2>
               
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-[#00b9bf]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <CheckCircle className="w-6 h-6 text-[#00b9bf]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
-                      10+ Yıl Deneyim
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      25+ Yıl Deneyim
                     </h3>
-                    <p className="text-gray-600">
-                      Sektörde 10 yılı aşkın deneyimimizle, en karmaşık projeleri bile 
-                      başarıyla tamamlıyoruz.
+                    <p className="text-gray-600 leading-relaxed">
+                      Sektörde 25 yılı aşkın deneyimimizle, en karmaşık mühendislik projelerini 
+                      bile başarıyla tamamlıyoruz.
                     </p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-[#00b9bf]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <CheckCircle className="w-6 h-6 text-[#00b9bf]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
-                      Uzman Ekip
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      Uzman Mühendislik Ekibi
                     </h3>
-                    <p className="text-gray-600">
-                      Deneyimli mühendislerden oluşan ekibimiz, her projeye 
-                      özel çözümler geliştiriyor.
+                    <p className="text-gray-600 leading-relaxed">
+                      Deneyimli mühendislerden oluşan ekibimiz, her projeye özel 
+                      çözümler geliştiriyor.
                     </p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-[#00b9bf]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <CheckCircle className="w-6 h-6 text-[#00b9bf]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
-                      Kalite Odaklı
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      Kalite Odaklı Yaklaşım
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 leading-relaxed">
                       Her projede en yüksek kalite standartlarını hedefliyor, 
                       müşteri memnuniyetini önceliyoruz.
                     </p>
@@ -269,16 +341,16 @@ const EngineeringPage = () => {
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <CheckCircle className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-[#00b9bf]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <CheckCircle className="w-6 h-6 text-[#00b9bf]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
-                      Sürekli Destek
+                    <h3 className="font-bold text-gray-900 mb-2">
+                      Sürekli Teknik Destek
                     </h3>
-                    <p className="text-gray-600">
-                      Proje tamamlandıktan sonra da teknik destek ve bakım 
-                      hizmetleri sunuyoruz.
+                    <p className="text-gray-600 leading-relaxed">
+                      Proje tamamlandıktan sonra da kapsamlı teknik destek ve 
+                      bakım hizmetleri sunuyoruz.
                     </p>
                   </div>
                 </div>
@@ -286,7 +358,7 @@ const EngineeringPage = () => {
             </div>
             
             <div className="relative">
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
+              <div className="bg-gradient-to-br from-[#00b9bf] via-[#009aa0] to-[#007b80] rounded-3xl p-8 text-white shadow-2xl">
                 <h3 className="text-2xl font-bold mb-6">Teknik Özellikler</h3>
                 <div className="space-y-4">
                   <div className="flex items-center">
@@ -303,6 +375,10 @@ const EngineeringPage = () => {
                   </div>
                   <div className="flex items-center">
                     <div className="w-3 h-3 bg-blue-400 rounded-full mr-3"></div>
+                    <span>Endüstri 4.0 Uyumluluğu</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-3 h-3 bg-purple-400 rounded-full mr-3"></div>
                     <span>Uluslararası Teknoloji Standartları</span>
                   </div>
                 </div>
@@ -313,26 +389,41 @@ const EngineeringPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-20 bg-gradient-to-br from-[#00b9bf] via-[#009aa0] to-[#007b80] text-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto px-8 text-center">
+          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
+            <Cpu className="w-4 h-4 mr-2" />
+            <span className="text-sm font-medium">Mühendislik Uzmanlığı</span>
+          </div>
+          
           <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-            Projenizi Hayata Geçirelim
+            Mühendislik{' '}
+            <span className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+              Projenizi Hayata Geçirelim
+            </span>
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Mühendislik uzmanlığımızla projelerinizi en yüksek kalitede tamamlayalım.
+          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+            25 yıllık deneyimimizle, mühendislik uzmanlığımızla projelerinizi 
+            en yüksek kalitede tamamlayalım.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
               href="/teklif-al"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+              className="group inline-flex items-center justify-center px-8 py-4 bg-white text-[#00b9bf] font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Teklif Alın
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/iletisim"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
+              className="group inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-[#00b9bf] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
             >
               İletişime Geçin
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
