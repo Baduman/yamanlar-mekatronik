@@ -12,6 +12,8 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const contactInfo = [
     {
@@ -65,10 +67,55 @@ const ContactPage = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form gönderme işlemi burada yapılacak
-    alert('Mesajınız alındı. En kısa sürede size dönüş yapacağız.');
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      console.log('=== İLETİŞİM FORM BAŞLIYOR ===');
+      console.log('Form data:', formData);
+      
+      const response = await fetch('https://us-central1-yamanlar-mekatronik.cloudfunctions.net/sendContactEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('HTTP Error:', response.status, errorText);
+        setSubmitMessage(`HTTP Error: ${response.status}`);
+        return;
+      }
+      
+      const result = await response.json();
+      console.log('Response data:', result);
+      
+      if (result.success) {
+        setSubmitMessage('Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
+        // Formu temizle
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        setSubmitMessage(result.message);
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      setSubmitMessage('Bir hata oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -280,12 +327,29 @@ const ContactPage = () => {
                   ></textarea>
                 </div>
                 
+                {/* Submit Message */}
+                {submitMessage && (
+                  <div className={`p-4 rounded-lg ${submitMessage.includes('başarıyla') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                    {submitMessage}
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#00b9bf] to-[#009aa0] text-white font-bold py-4 px-6 rounded-xl hover:from-[#009aa0] hover:to-[#007b80] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#00b9bf] to-[#009aa0] disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-6 rounded-xl hover:from-[#009aa0] hover:to-[#007b80] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  <Send className="w-5 h-5 mr-2" />
-                  Mesaj Gönder
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Gönderiliyor...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Mesaj Gönder
+                    </>
+                  )}
                 </button>
               </form>
             </div>

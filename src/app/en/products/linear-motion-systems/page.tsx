@@ -147,9 +147,11 @@ export default function LinearMotionSystems() {
                   {/* Buttons */}
                   <div className="flex gap-3">
                     {index < 3 ? (
-                      // First 3 products have catalog button (HIWIN green)
+                      // First 3 products have catalog button (HIWIN green) - redirect to correct pages
                       <Link
-                        href={product.pageUrl || '#'}
+                        href={index === 0 ? '/en/products/ball-screws-nuts' : 
+                              index === 1 ? '/en/products/linear-slides-carriages' : 
+                              '/en/products/end-supports'}
                         className="w-full bg-[#4CAF50] hover:bg-[#45a049] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
                       >
                         Catalog

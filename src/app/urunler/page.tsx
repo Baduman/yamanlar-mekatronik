@@ -227,9 +227,11 @@ const ProductsPage = () => {
                   {/* Buttons */}
                   <div className="flex gap-3">
                     {index < 3 ? (
-                      // İlk 3 ürün için sadece katalog butonu (HIWIN yeşili)
+                      // İlk 3 ürün için katalog butonu (HIWIN yeşili) - doğru sayfalara yönlendir
                       <Link
-                        href={`/katalog/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
+                        href={index === 0 ? '/urunler/vidali-mil-somunlar' : 
+                              index === 1 ? '/urunler/lineer-kizak-arabalar' : 
+                              '/urunler/uc-yataklari'}
                         className="w-full bg-[#4CAF50] hover:bg-[#45a049] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors text-center"
                       >
                         Katalog

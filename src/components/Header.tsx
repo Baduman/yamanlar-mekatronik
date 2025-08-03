@@ -186,7 +186,7 @@ const Header = () => {
           <div key={subItem.name} className="relative">
             <Link
               href={subItem.href}
-              className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-[#e6f7f8] hover:text-[#00b9bf] transition-colors"
+              className="flex items-center px-4 py-3 text-base font-medium text-gray-700 hover:bg-[#e6f7f8] hover:text-[#00b9bf] transition-colors"
               onMouseEnter={() => subItem.submenu && handleSubmenuMouseEnter(subItem.name)}
               onMouseLeave={() => subItem.submenu && handleSubmenuMouseLeave()}
             >
@@ -217,7 +217,7 @@ const Header = () => {
                   <Link
                     key={nestedItem.name}
                     href={nestedItem.href}
-                    className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-[#e6f7f8] hover:text-[#00b9bf] transition-colors"
+                    className="flex items-center px-4 py-3 text-base font-medium text-gray-700 hover:bg-[#e6f7f8] hover:text-[#00b9bf] transition-colors"
                   >
                     <Image 
                       src={nestedItem.icon} 
@@ -267,7 +267,7 @@ const Header = () => {
                     onMouseEnter={handleProductsMouseEnter}
                     onMouseLeave={handleProductsMouseLeave}
                   >
-                    <Link href={item.href} className="text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-sm font-medium transition-colors">
+                    <Link href={item.href} className="text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-base font-semibold transition-colors">
                       {item.name}
                     </Link>
                     <ChevronDown className="w-4 h-4 text-gray-500" />
@@ -278,7 +278,7 @@ const Header = () => {
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-sm font-medium transition-colors"
+                    className="text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-base font-semibold transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -292,7 +292,7 @@ const Header = () => {
             {/* Language Selector */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center space-x-2 text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-sm font-medium transition-colors"
+              className="flex items-center space-x-2 text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-base font-semibold transition-colors"
             >
               <Globe className="w-4 h-4" />
               <span>{language.toUpperCase()}</span>
@@ -301,7 +301,7 @@ const Header = () => {
             {/* Quote Button */}
             <Link
               href={language === 'tr' ? '/teklif-al' : '/en/quote'}
-              className="bg-[#00b9bf] hover:bg-[#009aa0] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="bg-[#00b9bf] hover:bg-[#009aa0] text-white px-4 py-2 rounded-lg text-base font-semibold transition-colors"
             >
               {t('nav.getQuote')}
             </Link>
@@ -326,7 +326,7 @@ const Header = () => {
                 <div key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-gray-700 hover:text-[#00b9bf] block px-3 py-2 text-base font-medium transition-colors"
+                    className="text-gray-700 hover:text-[#00b9bf] block px-3 py-2 text-lg font-semibold transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -337,7 +337,7 @@ const Header = () => {
                         <div key={subItem.name}>
                           <Link
                             href={subItem.href}
-                            className="flex items-center text-gray-600 hover:text-[#00b9bf] block px-3 py-2 text-sm transition-colors"
+                            className="flex items-center text-gray-600 hover:text-[#00b9bf] block px-3 py-2 text-base font-medium transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             <Image 
@@ -358,7 +358,7 @@ const Header = () => {
                                 <Link
                                   key={nestedItem.name}
                                   href={nestedItem.href}
-                                  className="flex items-center text-gray-500 hover:text-[#00b9bf] block px-3 py-2 text-xs transition-colors"
+                                  className="flex items-center text-gray-500 hover:text-[#00b9bf] block px-3 py-2 text-sm font-medium transition-colors"
                                   onClick={() => setIsMenuOpen(false)}
                                 >
                                   <Image 
@@ -387,14 +387,14 @@ const Header = () => {
               <div className="pt-4 border-t border-gray-200">
                 <button
                   onClick={toggleLanguage}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-sm font-medium w-full transition-colors"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-[#00b9bf] px-3 py-2 text-base font-semibold w-full transition-colors"
                 >
                   <Globe className="w-4 h-4" />
                   <span>Dil: {language.toUpperCase()}</span>
                 </button>
                 <Link
                   href={language === 'tr' ? '/teklif-al' : '/en/quote'}
-                  className="bg-[#00b9bf] hover:bg-[#009aa0] text-white px-4 py-2 rounded-lg text-sm font-medium block text-center mt-2 transition-colors"
+                  className="bg-[#00b9bf] hover:bg-[#009aa0] text-white px-4 py-2 rounded-lg text-base font-semibold block text-center mt-2 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t('nav.getQuote')}

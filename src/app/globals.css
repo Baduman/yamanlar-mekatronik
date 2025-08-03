@@ -38,6 +38,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: var(--font-bai-jamjuree), sans-serif;
 }
 
 a {

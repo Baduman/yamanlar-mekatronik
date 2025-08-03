@@ -2,12 +2,15 @@
 
 import { Send, Clock, Package, Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { sendQuoteEmail } from '@/lib/emailService';
 
 const QuotePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantity, setQuantity] = useState('');
   const [urgency, setUrgency] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   // Get product and category parameters from URL
   useEffect(() => {
@@ -134,10 +137,45 @@ const QuotePage = () => {
     'Other'
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission will be handled here
-    alert('Your quote request has been received. We will get back to you as soon as possible.');
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      // Collect form data
+      const formData = {
+        company: (e.target as HTMLFormElement).company?.value || '',
+        name: (e.target as HTMLFormElement).contactPerson?.value || '',
+        email: (e.target as HTMLFormElement).email?.value || '',
+        phone: (e.target as HTMLFormElement).phone?.value || '',
+        category: selectedCategory,
+        product: selectedProduct,
+        brand: (e.target as HTMLFormElement).brand?.value || '',
+        quantity: quantity,
+        urgency: urgency,
+        technicalDetails: (e.target as HTMLFormElement).technicalDetails?.value || '',
+        additionalNotes: (e.target as HTMLFormElement).additionalNotes?.value || ''
+      };
+
+      const result = await sendQuoteEmail(formData);
+      
+      if (result.success) {
+        setSubmitMessage('Your quote request has been sent successfully. We will get back to you as soon as possible.');
+        // Clear form
+        (e.target as HTMLFormElement).reset();
+        setSelectedCategory('');
+        setSelectedProduct('');
+        setQuantity('');
+        setUrgency('');
+      } else {
+        setSubmitMessage(result.message);
+      }
+    } catch {
+      setSubmitMessage('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -195,6 +233,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="text"
+                    name="company"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Your company name"
@@ -206,6 +245,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="text"
+                    name="contactPerson"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Full name"
@@ -220,6 +260,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Your email address"
@@ -231,6 +272,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Your phone number"
@@ -293,6 +335,7 @@ const QuotePage = () => {
                       Preferred Brand
                     </label>
                     <select
+                      name="brand"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     >
                       <option value="">Select brand</option>
@@ -340,6 +383,7 @@ const QuotePage = () => {
                     Technical Specifications / Details
                   </label>
                   <textarea
+                    name="technicalDetails"
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent resize-none"
                     placeholder="Product technical specifications, dimensions, special requirements, etc."
@@ -373,6 +417,7 @@ const QuotePage = () => {
                     Additional Notes
                   </label>
                   <textarea
+                    name="additionalNotes"
                     rows={3}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent resize-none"
                     placeholder="Additional information, special requests or your notes..."
@@ -380,14 +425,31 @@ const QuotePage = () => {
                 </div>
               </div>
 
+              {/* Submit Message */}
+              {submitMessage && (
+                <div className={`p-4 rounded-lg ${submitMessage.includes('successfully') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                  {submitMessage}
+                </div>
+              )}
+
               {/* Submit Button */}
               <div className="pt-6">
                 <button
                   type="submit"
-                  className="w-full bg-[#00b9bf] hover:bg-[#009aa0] text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#00b9bf] hover:bg-[#009aa0] disabled:bg-gray-400 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center"
                 >
-                  <Send className="w-5 h-5 mr-2" />
-                  Send Quote Request
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Quote Request
+                    </>
+                  )}
                 </button>
               </div>
             </form>

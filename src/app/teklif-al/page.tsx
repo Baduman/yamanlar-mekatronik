@@ -8,6 +8,8 @@ const QuotePage = () => {
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantity, setQuantity] = useState('');
   const [urgency, setUrgency] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   // URL'den ürün ve kategori parametrelerini al
   useEffect(() => {
@@ -70,7 +72,7 @@ const QuotePage = () => {
     {
       icon: Shield,
       title: 'Kalite Garantisi',
-      description: 'HIWIN ve diğer önde gelen markalar'
+      description: 'HIWIN, YOSO ve diğer önde gelen markalar'
     }
   ];
 
@@ -134,10 +136,63 @@ const QuotePage = () => {
     'Diğer'
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form gönderme işlemi burada yapılacak
-    alert('Teklif talebiniz alındı. En kısa sürede size dönüş yapacağız.');
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      console.log('=== TEKLİF FORM BAŞLIYOR ===');
+      
+      // Form verilerini topla
+      const formData = {
+        company: (e.target as HTMLFormElement).company?.value || '',
+        name: (e.target as HTMLFormElement).contactPerson?.value || '',
+        email: (e.target as HTMLFormElement).email?.value || '',
+        phone: (e.target as HTMLFormElement).phone?.value || '',
+        product: selectedProduct,
+        message: `Kategori: ${selectedCategory}\nMarka: ${(e.target as HTMLFormElement).brand?.value || ''}\nMiktar: ${quantity}\nAciliyet: ${urgency}\nTeknik Detaylar: ${(e.target as HTMLFormElement).technicalDetails?.value || ''}\nEk Notlar: ${(e.target as HTMLFormElement).additionalNotes?.value || ''}`
+      };
+
+      console.log('Form data:', formData);
+      
+      const response = await fetch('https://us-central1-yamanlar-mekatronik.cloudfunctions.net/sendQuoteEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('HTTP Error:', response.status, errorText);
+        setSubmitMessage(`HTTP Error: ${response.status}`);
+        return;
+      }
+      
+      const result = await response.json();
+      console.log('Response data:', result);
+      
+      if (result.success) {
+        setSubmitMessage('Teklif talebiniz başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
+        // Formu temizle
+        (e.target as HTMLFormElement).reset();
+        setSelectedCategory('');
+        setSelectedProduct('');
+        setQuantity('');
+        setUrgency('');
+      } else {
+        setSubmitMessage(result.message);
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      setSubmitMessage('Bir hata oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -151,7 +206,7 @@ const QuotePage = () => {
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               İhtiyacınız olan endüstriyel mekatronik malzemeleri için hızlı ve güvenilir teklif alın. 
-              HIWIN ve diğer önde gelen markaların ürünlerini stoktan tedarik ediyoruz.
+              HIWIN, YOSO ve diğer önde gelen markaların ürünlerini stoktan tedarik ediyoruz.
             </p>
           </div>
         </div>
@@ -195,6 +250,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="text"
+                    name="company"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Şirket adınız"
@@ -206,6 +262,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="text"
+                    name="contactPerson"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Ad soyad"
@@ -220,6 +277,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="E-posta adresiniz"
@@ -231,6 +289,7 @@ const QuotePage = () => {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     placeholder="Telefon numaranız"
@@ -293,6 +352,7 @@ const QuotePage = () => {
                       Tercih Ettiğiniz Marka
                     </label>
                     <select
+                      name="brand"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent"
                     >
                       <option value="">Marka seçiniz</option>
@@ -340,6 +400,7 @@ const QuotePage = () => {
                     Teknik Özellikler / Detaylar
                   </label>
                   <textarea
+                    name="technicalDetails"
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent resize-none"
                     placeholder="Ürünün teknik özellikleri, boyutları, özel gereksinimler vb."
@@ -373,6 +434,7 @@ const QuotePage = () => {
                     Ek Notlar
                   </label>
                   <textarea
+                    name="additionalNotes"
                     rows={3}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00b9bf] focus:border-transparent resize-none"
                     placeholder="Ek bilgiler, özel istekler veya notlarınız..."
@@ -380,14 +442,31 @@ const QuotePage = () => {
                 </div>
               </div>
 
+              {/* Submit Message */}
+              {submitMessage && (
+                <div className={`p-4 rounded-lg ${submitMessage.includes('başarıyla') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                  {submitMessage}
+                </div>
+              )}
+
               {/* Submit Button */}
               <div className="pt-6">
                 <button
                   type="submit"
-                  className="w-full bg-[#00b9bf] hover:bg-[#009aa0] text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#00b9bf] hover:bg-[#009aa0] disabled:bg-gray-400 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center"
                 >
-                  <Send className="w-5 h-5 mr-2" />
-                  Teklif Talebi Gönder
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Gönderiliyor...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Teklif Talebi Gönder
+                    </>
+                  )}
                 </button>
               </div>
             </form>

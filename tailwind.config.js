@@ -22,8 +22,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'monospace'],
+        sans: ['var(--font-bai-jamjuree)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-bai-jamjuree)', 'monospace'],
       },
     },
   },

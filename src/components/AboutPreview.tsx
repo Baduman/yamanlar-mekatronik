@@ -5,7 +5,7 @@ const AboutPreview = () => {
   const stats = [
     {
       icon: Award,
-      number: '1000+',
+      number: '100+',
       label: 'Ürün Çeşidi',
       description: 'Geniş ürün yelpazesi'
     },

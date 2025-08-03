@@ -2,6 +2,7 @@
 
 import { Phone, Mail, MapPin, Clock, Send, Package, Headphones, Building, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { sendContactEmail } from '@/lib/emailService';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const contactInfo = [
     {
@@ -65,10 +68,33 @@ const ContactPage = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission will be handled here
-    alert('Your message has been received. We will get back to you as soon as possible.');
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      const result = await sendContactEmail(formData);
+      
+      if (result.success) {
+        setSubmitMessage('Your message has been sent successfully. We will get back to you as soon as possible.');
+        // Clear form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        setSubmitMessage(result.message);
+      }
+    } catch {
+      setSubmitMessage('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -280,12 +306,29 @@ const ContactPage = () => {
                   ></textarea>
                 </div>
                 
+                {/* Submit Message */}
+                {submitMessage && (
+                  <div className={`p-4 rounded-lg ${submitMessage.includes('successfully') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                    {submitMessage}
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#00b9bf] to-[#009aa0] text-white font-bold py-4 px-6 rounded-xl hover:from-[#009aa0] hover:to-[#007b80] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#00b9bf] to-[#009aa0] disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-6 rounded-xl hover:from-[#009aa0] hover:to-[#007b80] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
                 >
-                  <Send className="w-5 h-5 mr-2" />
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </form>
             </div>

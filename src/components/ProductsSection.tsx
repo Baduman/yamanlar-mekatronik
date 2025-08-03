@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const products = [
   {
@@ -7,6 +8,8 @@ const products = [
     desc: 'Başta HIWIN olmak üzere Lineer hareket sistemleri yüksek hassasiyet ve dayanıklılık sunan lineer destek ürünleri, vidalı miller, Lineer raylar ,lineer arabalar ve teleskopik raylar gibi birçok ürünleri müşterilerimize sunuyoruz. HIWIN ve tüm diğer hareket sistemleri çözümleri hakkında bilgi ve fiyat almak için ürünlere tıklayınız',
     img: '/productImage/Lineer Kızak ve Araballarr.png',
     button: 'Detaylı Bilgi',
+    catalogButton: 'Katalog',
+    pageUrl: '/urunler/lineer-hareket-sistemleri',
     reverse: false,
   },
   {
@@ -14,6 +17,8 @@ const products = [
     desc: 'Kremayer ve pinyon sistemleri, dönüş hareketini lineer hareketle birleştiren önemli bileşenlerdir. Yamanlar Mekatronik, çeşitli dişli oranlarına sahip dişli sistemleri sunarak, güç aktarımında ve hareket kontrolünde esneklik sağlar.  Dayanıklı malzemeleri ve sağlam yapıları ile uzun ömür ve güvenilirlik sunarlar. Tüm Kremayer ve Pinyon / Dişli Sistemleri çözümleri hakkında bilgi ve fiyat almak için ürünlere tıklayınız',
     img: '/productImage/Kremayer ve Dişli Pinyon.jpg',
     button: 'Detaylı Bilgi',
+    catalogButton: 'Katalog',
+    pageUrl: '/urunler/kremayer-pinyon',
     reverse: true,
   },
   {
@@ -21,6 +26,8 @@ const products = [
     desc: 'Güç aktarımında kritik bir rol oynayan güç aktarım ürünleri, makine ve ekipmanlar arasında verimli bir bağlantı sağlar. Yamanlar Mekatronik olarak, dişliler, makaralar, kayışlar ve zincirler gibi geniş bir ürün yelpazesine sahibiz. Bu ürünler, enerji verimliliğini artırırken, işletmelerin performansını da yükseltir güç aktarım çözümleri hakkında bilgi ve fiyat almak için ürünlere tıklayınız.',
     img: '/productImage/GucAktarimUrunleri.jpg',
     button: 'Detaylı Bilgi',
+    catalogButton: 'Katalog',
+    pageUrl: '/urunler/guc-aktarim-urunleri',
     reverse: false,
   },
 ];
@@ -42,9 +49,20 @@ const ProductsSection = () => {
               <div className="md:w-1/2 flex flex-col justify-center px-4 md:px-0">
                 <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3 md:mb-2">{product.title}</h3>
                 <p className="text-gray-700 mb-4 text-sm md:text-base leading-relaxed">{product.desc}</p>
-                <button className="inline-block bg-[#00b9bf] hover:bg-[#009aa0] text-white font-medium px-4 py-2 md:px-6 md:py-2 rounded-lg transition-colors w-max text-sm md:text-base">
-                  {product.button}
-                </button>
+                <div className="flex gap-3">
+                  <Link
+                    href={product.pageUrl}
+                    className="inline-block bg-[#4CAF50] hover:bg-[#45a049] text-white font-medium px-4 py-2 md:px-6 md:py-2 rounded-lg transition-colors text-sm md:text-base"
+                  >
+                    {product.catalogButton}
+                  </Link>
+                  <Link
+                    href={`/teklif-al?product=${encodeURIComponent(product.title)}`}
+                    className="inline-block bg-[#00b9bf] hover:bg-[#009aa0] text-white font-medium px-4 py-2 md:px-6 md:py-2 rounded-lg transition-colors text-sm md:text-base"
+                  >
+                    {product.button}
+                  </Link>
+                </div>
               </div>
               <div className="md:w-1/2 flex justify-center items-center px-4 md:px-0">
                 <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 p-4 md:p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-full max-w-sm md:max-w-none">

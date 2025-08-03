@@ -8,10 +8,67 @@
     ],
     "rewrites": [
       {
+        "source": "/simple-test",
+        "destination": "/simple-test.html"
+      },
+      {
+        "source": "/test-mail",
+        "destination": "/test-mail.html"
+      },
+      {
+        "source": "/teklif-al",
+        "destination": "/teklif-al.html"
+      },
+      {
+        "source": "/iletisim",
+        "destination": "/iletisim.html"
+      },
+      {
+        "source": "/hakkimizda",
+        "destination": "/hakkimizda.html"
+      },
+      {
+        "source": "/muhendislik",
+        "destination": "/muhendislik.html"
+      },
+      {
+        "source": "/urunler",
+        "destination": "/urunler.html"
+      },
+      {
+        "source": "/en",
+        "destination": "/en.html"
+      },
+      {
+        "source": "/en/**",
+        "destination": "/en/index.html"
+      },
+      {
+        "source": "/urunler/**",
+        "destination": "/urunler/index.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
     ],
     "cleanUrls": true
-  }
-} 
+  },
+  "functions": [
+    {
+      "source": "yamanlarmekatronik-mail",
+      "codebase": "yamanlarmekatronik-mail",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}
